@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How To Get Readonly Mode In Django"
+title: "测试中文博客标题"
 description: "Guide to setup readonly mode for some users in django admin"
 category: articles
 tags: [python, django, django-admin]
