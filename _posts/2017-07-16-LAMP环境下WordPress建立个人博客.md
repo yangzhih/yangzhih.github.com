@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "LAMP环境下WordPress建立个人博客"
-description: "Guide to setup readonly mode for some users in django admin"
+description: "LAMP环境下WordPress建立个人博客"
 category: articles
-tags: [python, django, django-admin]
+tags: [lamp, wordpress]
 comments: false
 ---
 
