@@ -1,8 +1,8 @@
-name: Zachary Blog
+name: Write Paper
 description: >
-    Home
+    A blog site only for you
 about: >
-    about
+    一个只写文章的博客网站
 master_repo: false
 url: "http://zhyang.top/"
 markdown: kramdown
