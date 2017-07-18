@@ -71,3 +71,4 @@ comments: false
 ## -------安装完成。
 
 到此为止博客个人博客站的创建已基本完成，打开web界面做简单的配置界面就可以开心的写自己的博客了。
+![](http://http://ot9scj6tc.bkt.clouddn.com/1.png)
