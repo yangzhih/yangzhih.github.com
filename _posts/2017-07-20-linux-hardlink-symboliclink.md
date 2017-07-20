@@ -4,7 +4,7 @@ title: "硬链接与软连接"
 description: "硬链接与软连接"
 category: articles
 tags: [linux, 软连接，硬链接]
-comments: false
+comments: 
 ---
 
 Linux系统中存在两种链接文件，硬链接（hard link）和符号链接（symbolic link）。符号链接也称为软连接。想了解清楚这两种链接文件的区别并不容易，首先要清楚Linux文件系统的相关知识。
@@ -57,3 +57,5 @@ Linux系统中存在两种链接文件，硬链接（hard link）和符号链接
 
 
 ##　验证硬链接的特性
+
+
