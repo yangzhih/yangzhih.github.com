@@ -7,6 +7,7 @@ tags: [linux, 软连接，硬链接]
 comments: 
 ---
 
+
 Linux系统中存在两种链接文件，硬链接（hard link）和符号链接（symbolic link）。符号链接也称为软连接。想了解清楚这两种链接文件的区别并不容易，首先要清楚Linux文件系统的相关知识。
 我们知道文件有文件名和数据。而Linux的文件系统在存储文件时分为两个部分，用户数据（userdata）和元数据（metadata）。用户数据是文件的真实数据存储文件系统的data block中，元数据存储在一个iNode的节点块中，包括文件的iNode号，权限，大小，时间属性（atime,ctime,mtime），所属者/组等属性信息（但并不包括文件名）。
 ## iNode
