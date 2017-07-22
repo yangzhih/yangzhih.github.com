@@ -9,7 +9,7 @@ comments: false
 
 ## 写在前面
 &nbsp;&nbsp;&nbsp;&nbsp;作为一个运维工程师来讲，系统下的账号管理是工作中很重要的一个环节，所以了解系统的账号管理还是非常有必要的。<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;首先，我们要知道对于Linux系统而言，它并不知道你是谁，它仅识别用户的ID号，而用户想要登录Linux系统，必须取得两个ID号(uid，gid),用户的名称与uid的映射关系就保存在/etc/passwd。用户想要登录Linux系统，需要两种id，UID和GID（组id）,在登录界面，用户输入登录名后一系统首先会判断passwd文件中是否有该用户，没有就跳出，如果有的话就会取出用户的uid，gid等信息，其中最重要的取出用户的shell，判断该shell是否要登录，若可登录再去匹配用户密码，相匹配成功才会登录成功。一个简单登录操作背后有着很繁杂的过程。在用户管理主要有四个配置文件/etc/passwd,/etc/shadow,/etc/group,/etc/gshadow。详细了解这四个文件的配置以及各字段的含义是深入了解Linux账号管理的前提条件。下面笔者写下自己的了解，也许笔者了解的并不完善，可使用 man 5 [config_file]命令查看文档。
+&nbsp;&nbsp;&nbsp;&nbsp;首先，我们要知道对于Linux系统而言，它并不知道你是谁，它仅识别用户的ID号，而用户想要登录Linux系统，必须取得两个ID号(uid，gid)，用户的名称与uid的映射关系就保存在/etc/passwd。用户想要登录Linux系统，需要两种id，UID和GID（组id），在登录界面，用户输入登录名后一系统首先会判断passwd文件中是否有该用户，没有就跳出，如果有的话就会取出用户的uid，gid等信息，其中最重要的取出用户的shell，判断该shell是否要登录，若可登录再去匹配用户密码，相匹配成功才会登录成功。一个简单登录操作背后有着很繁杂的过程。在用户管理主要有四个配置文件/etc/passwd，/etc/shadow，/etc/group，/etc/gshadow。详细了解这四个文件的配置以及各字段的含义是深入了解Linux账号管理的前提条件。下面笔者写下自己的了解，也许笔者了解的并不完善，可使用 man 5 [config_file]命令查看文档。
 
 ### /etc/passwd 文件详解
 
@@ -24,7 +24,7 @@ passwd配置文件每行为一个账号记录使用“:”作为分隔符分为�
    &nbsp;&nbsp;&nbsp;CentOS6和以前版本，uid在1-500之间，为系统用户；CentOS7版本中，uid在1-1000之间，为系统用户。<br/>
    &nbsp;&nbsp;&nbsp;CentOS6和以前版本，uid大于等于500，为一般用户；CentOS7版本中，uid大于等于1000，为一般用户。<br/>
    &nbsp;&nbsp;&nbsp;由于系统根据uid识别用户类型，所以不要轻易改变passwd文件，尤其是管理员用户。<br/>
-4，用户组id,该ID号用户和/etc/group文件相关，对应于组名和gid。<br/>
+4，用户组id，该ID号用户和/etc/group文件相关，对应于组名和gid。<br/>
 5，用户的描述信息。<br/>
 6，用户家目录。<br/>
 7，用户使用的shell类型，当用户shell为/sbin/nologin时，用户不能登录。<br/>
@@ -48,13 +48,13 @@ passwd配置文件每行为一个账号记录使用“:”作为分隔符分为�
 9，保留。<br/>
 
 ### /etc/group  /etc/gshadow 文件简述
-在了解完passwd和shadow配置文件之后，我想对于理解group和gshadow文件已经是什么难事。这里就简述一下两个文件的文件结构含义。<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;在了解完passwd和shadow配置文件之后，我想对于理解group和gshadow文件已经是什么难事。这里就简述一下两个文件的文件结构含义。<br/>
 group配置文件也是每行表示一条记录，以“:”作为分隔符，各个字段的含义为：【group_name:passwd:GID:user_list】<br/>
-gshadow文件各字段含义如下【group_name:passwd:group_adminster:members】<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;gshadow文件各字段含义如下【group_name:passwd:group_adminster:members】<br/>
 这里有两个值得注意的地方：1，group的用户列表中默认只保存以该组为附加组的成员；2，gshadow文件的members字段必须与group的user_list一致。<br/>
 
 
-只有简单的了解了上面的四个配置文件，才能更好的了解Linux系统的账号管理的功能，下面就来讲讲Linux系统的账号管理，我把该功能分为三个部分来讲，分别为用户管理，口令管理和用户组管理。
+&nbsp;&nbsp;&nbsp;&nbsp;只有简单的了解了上面的四个配置文件，才能更好的了解Linux系统的账号管理的功能，下面就来讲讲Linux系统的账号管理，我把该功能分为三个部分来讲，分别为用户管理，口令管理和用户组管理。
 ## 用户管理 
 
 用户的管理可分为用户的新增，更改，删除。
