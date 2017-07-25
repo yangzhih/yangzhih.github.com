@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Linux文件标准权限"
+title: "Linux文件管理--标准权限"
 description: "Linux文件管理"
 category: articles
 tags: [linux, 权限]

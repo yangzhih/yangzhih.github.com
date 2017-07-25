@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Linux文件特殊权限"
+title: "Linux文件管理--特殊权限"
 description: "Linux文件管理"
 category: articles
 tags: [linux, 权限]
