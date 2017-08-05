@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Linux软件包管理——RPM"
+title: "Linux软件包管理"
 description: "Linux软件包管理"
 category: articles
 tags: [linux, rpm,yum]
@@ -10,6 +10,8 @@ comments: false
 ### 写在前面
 
 在Linux的学习过程中，编译安装的软件管理方式使得很多新手对Linux望而却步。毕竟不是每个人都会进行源码编译的。当然这个问题对于Linux发行厂商而言也是阻止Linux推广的障碍。如果有一种机制能够在具有相同硬件环境和系统环境上面把软件事先编译好，然后加上与Windows类似的软件管理机制的话，Linux的软件管理就会简单很多，RPM和YUM（笔者是的环境是CentOS，其他发行版的软件管理机制就不多做介绍了）也就应运而生了。
+
+## Linux软件包管理——RPM
 
 ### RPM是什么？
 RPM(RedHat Packets Manager)，顾名思义，该软件管理机制是Redhat公司开发的。其最大的特点就是事先将你要安装的软件编译过，并且打包成为RPM机制的安装包，在安装过程中，会根据自己数据库里面的记录来判断安装的软件是否满足依赖性的关系，若满足就予以安装，不满足的话，用户要手动解决依赖关系后在进行安装。因为RPM有自己的数据库记录，所以软件的升级，查询，安装以及卸载都很方便。
@@ -41,7 +43,7 @@ RPM的使用就是使用rpm命令对软件进行管理，包括对软件的安�
 	--replacepkgs   重现安装某软件
 	--force   强制安装，就是上面两个参数的综合体
 	--test   测试安装，用于测试该软件是否可以安装在使用的Linux环境，也可以检查依赖关系
-	--noscripts 如果读者在安装某个软件时，不想其在安装过程中执行自带的一些脚本可以使用该参数，但不建议，有时会安装不成功或者功能无法使用的情况。
+	--noscripts 如果读者在安装某个软件时，不想其在安装过程中执行自带的一些脚本可以使用该参数，但不建议，有时会安装失败或功能无法使用的情况。
 
 在安装rpm软件包时的参数还有很多，笔者不能详录，也不常用。笔者建议使用ivh安装就可以了。
 
@@ -98,3 +100,107 @@ RPM包的升级方式尤其简单，读者如果要升级某个软件包，可�
 
 验证可以发现程序是否异常，但是如果安装的软件本身就被篡改过那岂不是风险更大？为了解决这些问题，Linux发行的镜像中都存在一个公钥文件（RPM-GPG-KEY-CentOS-6），也称为数字证书，读者在安装软件时也可以安装这个数字证书，使用rpm --import  RPM-GPG-KEY-CentOS-6命令安装证书，卸载使用-e,查看证书信息使用rpm -qi `rpm -qa|grep pubkey`的方式。    
 
+## Linux软件包管理——YUM
+
+我想每一个熟悉RPM包管理的读者在使用RPM过程中肯定遇到过遇到依赖死锁束手无策的情况，有时候想安装一个软件A，但是安装A就需要软件B的支持，安装软件B有需要软件C的支持，当安装软件C时，系统又告诉你需要软件A的支持，当依赖关系出现了环状关系，只能使用rpm的nodeps选项或者强制安装。但是这样的方式总会有一些莫名奇妙的小问题。这个时候就体现到YUM包管理器的重要性了。
+笔者想通过三个小部分来讲述YUM软件包管理器的功能与配置的问题，分别为YUM的定义，YUM的功能，YUM客户端的配置。希望读者能从此文有丁点收获。
+
+###YUM是什么？
+YUM（Yellow dog Updater,Modified）是一个在红帽系列Linux发行版的一个软件包管理器。YUM包管理器是基于rpm的包管理器，yum通过分析rpm包的标题数据信息，根据其软件的相关性来判断出依赖关系的解决方案，然后自动处理软件的依赖属性问题。可以高效的解决软件管理方面的疑难问题。
+
+###YUM的功能
+YUM的功能与通用的包管理器大致相同，软件的查询，安装，升级，卸载。除了这些之外还有软件包组管理的的功能。
+
+- **软件安装/升级**
+
+使用yum安装或者升级软件非常简单， 使用yum install/reinstall/update packetname 命令，以安装lftp软件为例
+
+		[root@centos6 workspace]#yum -y install lftp     #使用YUM安装ftp客户端软件  reinstall参数为重新安装软件
+		Loaded plugins: fastestmirror, refresh-packagekit, security
+		...
+		lftp-4.0.9-14.el6.x86_64.rpm                                    | 755 kB     00:00     
+		...
+		Installed:
+		  lftp.x86_64 0:4.0.9-14.el6                                                           
+		Complete!
+
+
+从上面显示可以看到使用YUM对软件的安装是非常快速的，读者无需考虑软件平台是否支持该包，更无需解决复杂的依赖关系。从这里就能出使用YUM安装软件的便利。
+		
+- **查询功能**
+
+yum的查询功能很丰富，使用方法是 yum [list|info|search|provides|whatprovides|repolist]，下面笔者为大家讲述一下他们的具体含义与简单用法，由于显示很多信息，笔者会把非关键信息以省略的方式展示。
+
+	[root@centos6 workspace]#yum list    #列出服务器上面提供的所有软件包，包括软件包，版本，安装方式（或者仓库名）
+	[root@centos6 workspace]#yum list updates  #查看系统内那些包可以升级  
+	[root@centos6 workspace]#yum list installed  #查看系统内那些包以安装
+	[root@centos6 workspace]#yum list available  #查看系统内有哪些包可以在这个yum仓库安装
+	[root@centos6 workspace]#yum info lftp   #查看yum仓库内某个软件的详细信息(安装状态，大小以及一些协议信息)
+	[root@centos6 ~]#yum search lftp	#搜索lftp（可以是关键字）相关的软件有哪些，以冒号分隔软件名和软件描述信息
+	[root@centos6 ~]#yum whatprovides /etc/ssh/sshd_config  #查看指定的特性（配置文件）属于哪个软件
+	[root@centos6 ~]#yum provides passwd
+
+
+- **软件卸载**
+
+YUM的软件卸载很简单，只有一个remove操作，后面可以跟多个软件包或者通配符，无需考虑依赖关系。
+	
+	[root@centos6 ~]#yum remove  lftp   #卸载某个软件包
+
+- **组和仓库相关操作**
+
+与其他包管理器不同的就是yum有对包组管理的的功能。
+
+	[root@centos6 ~]#yum repolist   # 查看本机有哪些yum仓库
+	[root@centos6 ~]#yum clean all   #清空yum缓存
+	[root@centos6 ~]#yum makecahe	#构建yum缓存
+	[root@centos6 ~]#yum history  #yum的事物历史
+	[root@centos6 ~]#yum history [info|list|packages-list|packages-info|rollback|new|sync|status|redo|undo]
+	#这个为yum的一些高级功能，也不常用，读者可以使用man帮助来学习。
+	[root@centos6 ~]#yum grouplist  # 查看系统拥有哪些软件包组
+	[root@centos6 ~]#yum groupinstall  "development tools"  #安装某个软件包组
+	[root@centos6 ~]#yum groupupdate  "development tools"   #更新某个软件包组
+	[root@centos6 ~]#yum groupremove  "development tools"   #卸载某个软件包组
+	[root@centos6 ~]#yum groupinfo  "development tools"     #查看某个软件包组的信息
+	
+
+>***yum 的命令行选项***
+
+	yum [options] [command] [package ...]
+		--nogpgcheck ：禁止进行gpg check
+		-y:  自动回答为“yes”
+		-q ：静默模式
+		--disablerepo=repoidglob ：临时禁用此处指定的repo
+		--enablerepo=repoidglob ：临时启用此处指定的repo
+		--noplugins ：禁用所有插件
+
+## 配置yum仓库
+
+- **配置yum客户端**
+
+
+
+在对yum的客户端进行配置之前，首先要了解一下它都有哪些配置。yum的配置文件有多个，本文只江苏其中重要的两个/etc/yum.conf ，/etc/yum.repos.d/目录。打开yum.conf文件之后可以看到一下几个参数
+
+	cachedir  #缓存路径
+	keepcache  #yum安装的时下载的软件包是否删除
+	logfile  #yum日志路径
+	gpgcheck=1  #检查秘钥
+	installonly limit  # 最多同时安装几个包
+	...
+
+yum仓库的客户端的配置文件在/etc/yum.repos.d/目录下，必须以.repo为后缀来命名。读者可以把系统默认的删除或者备份在其他路径之下。通常在生产环境中需要在本地局域网搭建yum仓库所以学会如何配置yum源是一个很重要的技能
+
+	[cdrom]                                                                            
+	name=cdrom
+	baseurl=http://192.168.0.1/centos/$releasever/
+	gpgcheck=1
+	gpgkey=http://192.168.0.1/centos/$releasever/RPM-GPG-KEY-CentOS-$releasever
+
+其中name为yum仓库的名称（自定义），baseurl为yum仓库的路径，这个路径很重要，该路径为repodata目录所在的路径。yum能够完美的解决依赖关系就是靠repo这个目录下的文件，该目录下中的数据是yum在分析RPM包的标题数据后所产生的数据。因此，baseurl的路径下一定有一个repo的目录存在。gpgcheck和yum.conf中含义相同，该参数最后生效，如果该参数为0表示在使用该yum仓库的软件时不检查数字证书。gpgkey为数字证书的存在路径。
+
+
+- **配置yum客户端**
+
+服务器端的配置也很简单，读者需要把安装光盘的文件或者第三方的文件中的软件包拷出来，放在同一目录下，执行createrepo packages（包所在目录）命令来生成repodata目录然后把数字证书放入该目录。最简单有效的方法是把光盘中的文件全部拷出来。
+当然要配置yum服务端需要搭建一个简单的服务器，可以使用web服务器或者ftp服务器然后把配置好的yum仓库置于该种服务器软件所对应的目录下。如果是ftp服务器搭建yum仓库，客户端的配置baseurl应该是使用ftp协议，如果是在本机配置使用file://后跟绝对路径。
