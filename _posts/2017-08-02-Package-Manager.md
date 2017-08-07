@@ -109,6 +109,7 @@ RPM包的升级方式尤其简单，读者如果要升级某个软件包，可�
 YUM（Yellow dog Updater,Modified）是一个在红帽系列Linux发行版的一个软件包管理器。YUM包管理器是基于rpm的包管理器，yum通过分析rpm包的标题数据信息，根据其软件的相关性来判断出依赖关系的解决方案，然后自动处理软件的依赖属性问题。可以高效的解决软件管理方面的疑难问题。
 
 ###YUM的功能
+
 YUM的功能与通用的包管理器大致相同，软件的查询，安装，升级，卸载。除了这些之外还有软件包组管理的的功能。
 
 - **软件安装/升级**
@@ -129,7 +130,11 @@ YUM的功能与通用的包管理器大致相同，软件的查询，安装，�
 		
 - **查询功能**
 
-yum的查询功能很丰富，使用方法是 yum [list|info|search|provides|whatprovides|repolist]，下面笔者为大家讲述一下他们的具体含义与简单用法，由于显示很多信息，笔者会把非关键信息以省略的方式展示。
+
+
+yum的查询功能很丰富，使用方法是 yum [list|info|search|provides|whatprovides|repolist]
+下面笔者为大家讲述一下他们的具体含义与简单用法，由于显示很多信息，笔者会把非关键信息以省略的方式展示。
+
 
 	[root@centos6 workspace]#yum list    #列出服务器上面提供的所有软件包，包括软件包，版本，安装方式（或者仓库名）
 	[root@centos6 workspace]#yum list updates  #查看系统内那些包可以升级  
