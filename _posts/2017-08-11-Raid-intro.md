@@ -59,7 +59,8 @@ RAID 10由于在上层把多组RAID 1构成Stripe，容量利用率是50%，例�
 
 ### Raid 1E
 
-![](http://ot9scj6tc.bkt.clouddn.com/Raid1E.png?imageMogr2/thumbnail/!50p/blur/1x0/quality/75|imageslim)
+![](http://ot9scj6tc.bkt.clouddn.com/Raid1E.png?imageMogr2/thumbnail/!50p/blur/1x0/quality/75|imageslim)  
+
 
 RAID-1E:(也叫做混合型或者增强型RAID1)以镜像的方式将数据分条带分布存储于各硬盘上。由IBM公司提出的一种私有RAID级别，没有成为国际标准。它并不是我们通常所说的RAID 0+1的组合。RAID 1E的工作原理与RAID1基本上是一样的，只是RAID 1E的数据恢复能力更强，但由于RAID 1E写一份数据至少要两次，因此，RAID处理器的负载被增强，从而造成磁盘读写能力的下降。RAID 1E至少需要3块硬盘才能实现。RAID1E整合了镜象和数据条带。该阵列级别的数据条带及数据备份贯穿在逻辑盘中所有的硬盘当中。跟RAID1一样，数据是镜象的，逻辑盘的容量是硬盘总容量的一半。RAID1E跟RAID1类似，它能提供数据冗余及高的性能，但存储容量减少。然而，RAID1E允许使用更多的物理硬盘。
 
