@@ -60,7 +60,7 @@ RAID 10由于在上层把多组RAID 1构成Stripe，容量利用率是50%，例�
 ### Raid 1E
 
 
-<img src="http://ot9scj6tc.bkt.clouddn.com/Raid1E.png" width="640px" />
+<img src="http://ot9scj6tc.bkt.clouddn.com/Raid1E.png" width="500px" />
 
 
 
