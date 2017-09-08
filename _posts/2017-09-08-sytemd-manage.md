@@ -59,7 +59,7 @@ unit 表示不同类型的`systemd` 对象，通过配置文件进行标识和�
 
 `sysVinit`中通常以`runlevel`的形式加载一组服务，在systemd启动过程中使用`target`取代`runlevel`，这也是启动过程中最大的变化。
 `sysVinit`中定义了7种`runlevel`，0和6表示开机和重启，1级别只包含一些必须启动的服务，加载bash进程时不做身份校验，一般用于维护和紧急的救援工作。2345级别虽然有系统本身对应的级别说明，但是用户可以更改其相应的配置文件来做定制化的配置。在配置服务过程中，用户需要自己解决服务的依赖关系，比如如果你要使用web服务，需要网络服务的支持，所以web服务的启动需要在`network`服务之后。这种依赖关系的判断需要用户按照自己的经验来判断，如果判断失误非常容易造成无法启动的情况。
-在`systemd`中默认使用了40多种target，当系统启动时，会根据配置文件来确定依赖关系并进行加载。下面是`runleve`l和`target`之间的对应表单：
+在`systemd`中默认使用了40多种`target`，当系统启动时，会根据配置文件来确定依赖关系并进行加载。下面是`runleve`l和`target`之间的对应表单：
 
 	SysVinit runlevel              system target
 	0                    runlevel0.target -> poweroff.target
@@ -71,16 +71,16 @@ unit 表示不同类型的`systemd` 对象，通过配置文件进行标识和�
 	6                    runlevel6.target -> reboot.target
 
 可以看出，在使用这5种`target`来对应`sysVinit`中的7种运行级别，从而实现向后的兼容性问题。
-打开任意一个`target`配置文件，里面有一个非常重要的参数，关于依赖关系，即`Requires/Wants`关键字。`target`或者各个`unit`之间的依赖关系有该关键字来确认。其中`Requires`表示强制依赖关系，Wangts表示非强制依赖关系。除了`Wants`和`Requires`之外还可以有`WantedBy、RequiredBy、Conflicts、ConglictedBy、Before、After`等关键字来表示依赖与被依赖的关系。`systemd`实现自动化解决依赖关系也是靠这些关键字来实现。只有当依赖的【unit】全部激活后，当前`unit`才会被引导。每个关键字表示的含义如下：
+打开任意一个`target`配置文件，里面有一个非常重要的参数，关于依赖关系，即`Requires/Wants`关键字。`target`或者各个`unit`之间的依赖关系有该关键字来确认。其中`Requires`表示强制依赖关系，Wangts表示非强制依赖关系。除了`Wants`和`Requires`之外还可以有`WantedBy、RequiredBy、Conflicts、ConglictedBy、Before、After`等关键字来表示依赖与被依赖的关系。`systemd`实现自动化解决依赖关系也是靠这些关键字来实现。只有当依赖的[unit]全部激活后，当前`unit`才会被引导。每个关键字表示的含义如下：
 
 	关键字                含义
-	Requires          强制依赖关系
+	Requires           强制依赖关系
 	Wants              非强制依赖关系，有依赖冲突时，暂时解除依赖关系
 	Before             引导顺序，当前unit要在该值之前加载
 	After              引导顺序，当前unit要在该值之后加载，与before相反
-	Conflicts         冲突关系
+	Conflicts          冲突关系
 	WantedBy           unit为service，弱依赖关系
-	RequiredBy        unit为service，强依赖关系
+	RequiredBy         unit为service，强依赖关系
 	ConglictedBy      
 
 上诉所说的依赖关系关键字都处于配置文件的`unit`小节中，`unit`小节中除了依赖关系之外还有`description`关键字表示描述信息。除了unit小节外还有一个`install`小节，表示当前unit是否开机需要加载，和`sysVinit`的`chkconfig  on` 设置开机自启动的功能是相同的。第一个被引导的target必须设置为`Alias=default.target`。
@@ -117,7 +117,7 @@ unit 表示不同类型的`systemd` 对象，通过配置文件进行标识和�
 
 ### 系统管理
 
-Systemd把一些需要修改配置文件才能生效的功能也做成了新的命令，比如hostnamectl,localectl,loginctl,timedatectl等。
+Systemd把一些需要修改配置文件才能生效的功能也做成了新的命令，比如`hostnamectl,localectl,loginctl,timedatectl`等。
 
 1，Systemctl命令，Systemd 的主命令，用于管理系统
 
@@ -182,7 +182,6 @@ System 与sysVinit的服务对照表
 	[root@centos7 ~]# systemctl mask httpd.service 禁止手动自动启动某服务
 	[root@centos7 ~]# systemctl unmask httpd.service 取消禁止
 
-状态
 
 
 依赖关系
