@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Sytemd和Init对服务进程的管理"
-description: "Sytemd和Init对服务进程的管理"
+title: "Sytemd管理"
+description: "Sytemd管理"
 category: articles
 tags: [linux,systemd,init]
 comments: false
