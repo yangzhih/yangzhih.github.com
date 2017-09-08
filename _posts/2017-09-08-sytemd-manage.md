@@ -113,6 +113,15 @@ unit 表示不同类型的`systemd` 对象，通过配置文件进行标识和�
 	Systemd 执行multi-user.target 下的getty.target 及登录服务
 	systemd 执行graphical 需要的服务
 
+**运行级别之间的切换**
+
+	[root@centos7 ~]# init 3    兼容sysVinit命令 ,切换至对应的multi-user模式
+	[root@centos7 ~]# systemctl isolate multi-user.target
+	[root@centos7 ~]# systemctl get-default  获取当前默认启动的target
+	[root@centos7 ~]# systemctl set-default multi-user.target  设置默认启动的target 或者使用如下命令
+	[root@centos7 ~]# ln -sf /lib/systemd/system/multi-user.target  /etc/systemd/system/default.target
+
+
 ## Systemd常用命令实例
 
 ### 系统管理
