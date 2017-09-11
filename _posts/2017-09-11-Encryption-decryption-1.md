@@ -102,38 +102,37 @@ AES，高级加密标准，速度快，安全级别高，密钥长度更长。<b
 ### 对称加密
 以des3算法为例。
 
-	#cat >test.txt <<EOF
+	#cat >test.txt <<EOF   先生成一个文件
 	> Hello,YangZhiHeng.
 	> This is a important data.
 	> Please encryption.
 	> EOF
-	加密
-	#openssl enc -e -des3 -a -salt -in test.txt -out test.txt.ciphertext
+	加密 -e选项表示加密  -d表示解密 
+	#openssl enc -e -des3 -a -salt -in test.txt -out test.txt.ciphertext   
 	enter des-ede3-cbc encryption password:
 	Verifying - enter des-ede3-cbc encryption password:
-	#cat test.txt.ciphertext
+	#cat test.txt.ciphertext  #生成不可读的加密文件
 	U2FsdGVkX18DaETpo7hdGGOxexC5KlojOXdRJQXzmRrrxMa1B0gzHIm1q+p1fxnY
 	QiZ+BhcHrjV/OFk27VrSzjOaEd1WpeRZb7yivxu29Q2iDsK4eHj7ZA==
-	rm -f test.txt
+	#rm -f test.txt  #删除原文件，保证保密性   
 	解密
-	#openssl enc -d -des3 -a -salt -in test.txt.ciphertext
+	#openssl enc -d -des3 -a -salt -in test.txt.ciphertext  #不输出到文件中，解密时需指定原来的加密算法
 	enter des-ede3-cbc decryption password:
 	Hello,YangZhiHeng.
 	This is a important data.
 	Please encryption.
-	#openssl enc -d -des3 -a -salt -in test.txt.ciphertext -out test.txt 
+	#openssl enc -d -des3 -a -salt -in test.txt.ciphertext -out test.txt  #-out选项指定输出的文件
 
 ## 单向加密
 
-	#openssl dgst -md5  -out test.txt.md5 test.txt   输出至文件
-	#openssl dgst -md5  test.txt
+	#openssl dgst -md5  -out test.txt.md5 test.txt   #输出至文件 md5可换为其他散列算法比如sha1. 
+	#openssl dgst -md5  test.txt   #在标准输出显示 
 
 ## 生成公钥私钥对
 
-	(umask 066;openssl genrsa  -out rsakey.private  2048 –des3 )  #修改权限并对私钥进行加密
-	openssl rsa  -in rsakey.sk -pubout -out rsakey.pk  从私钥中提取公钥
+	#(umask 066;openssl genrsa  -out rsakey.private  2048 –des3 )  #修改权限并对私钥进行加密,圆括号表示开启子进程执行，定义umask不影响当前shell环境
+	#openssl rsa  -in rsakey.sk -pubout -out rsakey.pk  从私钥中提取公钥
 	
-	openssl genrsa -out rsakey.sk 4096
-	chmod og=- rsakey.sk
-	]# openssl rsa -in rsakey.sk -pubout > rsakey.pk
-	
+	#openssl genrsa -out rsakey.sk 4096
+	#chmod og=- rsakey.sk
+	# openssl rsa -in rsakey.sk -pubout > rsakey.pk
