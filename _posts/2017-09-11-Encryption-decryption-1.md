@@ -1,9 +1,7 @@
 ---
 layout: post
-title: "
-加密解密基本技术——理论浅析"
-description: "
-加密解密基本技术——理论浅析"
+title: "加密解密基本技术——理论浅析"
+description: "加密解密基本技术——理论浅析"
 category: articles
 tags: [linux,加密，解密]
 comments: false
